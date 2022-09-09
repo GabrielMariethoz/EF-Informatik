@@ -2,10 +2,10 @@ import time
 
 zahlen = []
 primzahlen = [2]
-max_zahl = 1000000
+MAX_ZAHL = 1000000
 zeit = time.time()
 
-for counter in range(3, max_zahl + 1):
+for counter in range(3, MAX_ZAHL + 1):
     primzahl_bool = True
     zahl = 0
 
