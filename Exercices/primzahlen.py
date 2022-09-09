@@ -7,11 +7,12 @@ for counter in range(2, 101):
 
 
 for zahl in zahlen:
-    for primzahl in primzahlen:
-        if zahl % primzahl == 0:
-            primzahl_bool = False
+    if primzahl_bool:
+        for primzahl in primzahlen:
+            if zahl % primzahl == 0:
+                primzahl_bool = False
 
-    if primzahl_bool == True:
+    if primzahl_bool:
         primzahlen.append(zahl)
     primzahl_bool = True
 
