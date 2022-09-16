@@ -14,14 +14,35 @@ def minus():
 
 
 def zahl(zahl_m):
+    if zahl_m == 2:
+        color = "\033[31m"
+    elif zahl_m == 4:
+        color = "\033[32m"
+    elif zahl_m == 8:
+        color = "\033[33m"
+    elif zahl_m == 16:
+        color = "\033[34m"
+    elif zahl_m == 32:
+        color = "\033[35m"
+    elif zahl_m == 64:
+        color = "\033[36m"
+    elif zahl_m == 128:
+        color = "\033[30;1m"
+    elif zahl_m == 256:
+        color = "\033[31;1m"
+    elif zahl_m == 512:
+        color = "\033[33;1m"
+    elif zahl_m == 1024:
+        color = "\033[34;1m"
+
     if zahl_m < 10:
-        return f"|   {zahl_m} "
+        return f"|{color}   {zahl_m} \033[0m"
     elif zahl_m < 100:
-        return f"|  {zahl_m} "
+        return f"|{color}  {zahl_m} \033[0m"
     elif zahl_m < 1000:
-        return f"| {zahl_m} "
+        return f"|{color} {zahl_m} \033[0m"
     else:
-        return f"| {zahl_m}"
+        return f"|{color} {zahl_m}\033[0m"
 
 
 def zeile(zeile):
