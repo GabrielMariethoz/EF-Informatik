@@ -40,7 +40,7 @@ def zahl(zahl_m):
     elif zahl_m < 100:
         return f"|{color}  {zahl_m} \033[0m"
     elif zahl_m < 1000:
-        return f"|{color} {zahl_m} \033[0m"
+        return f"|{color}  {zahl_m}\033[0m"
     else:
         return f"|{color} {zahl_m}\033[0m"
 
