@@ -1,4 +1,5 @@
 import zufallsworte
+import sys
 # ß ist in den Wörtern
 
 
@@ -200,14 +201,14 @@ class Hangman():
             self.__init__()
             self.spielen()
         elif neue_runde.lower() == "nein":
-            pass
+            sys.exit()
         else:
             neue_runde()
 
     def spielen(self):
         while self.versuche > 0:
             self.test()
-            if len(set(self.wort)) == len(set(self.gefunden)):
+            if set(self.wort) == set(self.gefunden):
                 self.gewonnen()
 
         print(f"Schade, Sie haben verloren. Das richtige Wort war {self.wort}.")
