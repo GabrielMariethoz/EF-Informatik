@@ -171,10 +171,19 @@ class Hangman():
 
         print("\n")
 
+    def eingabe(self):
+
+        while True:
+            guess = input(f"Geben Sie einen Buchstaben oder ein Wort ein {self.geraten} : ")
+            if guess.isalpha():
+                return guess
+            else:
+                print("Diese Eingabe ist nicht gültig. Versuchen Sie es noch einmal. ")
+
     def test(self):
         self.wortlaenge()
 
-        guess = input(f"Geben Sie einen Buchstaben oder ein Wort ein {self.geraten} : ")
+        guess = self.eingabe()
         print("\n")
         self.geraten.append(guess)
 
@@ -183,6 +192,7 @@ class Hangman():
                 if buchstabe.lower() == guess.lower():
                     print("Richtig!")
                     self.gefunden.append(guess.lower())
+                    self.gefunden.append(guess.capitalize())
                     return
             self.versuche -= 1
             print("Falsch :(")
@@ -208,7 +218,7 @@ class Hangman():
     def spielen(self):
         while self.versuche > 0:
             self.test()
-            if set(self.wort) == set(self.gefunden):
+            if set(self.wort) <= set(self.gefunden):
                 self.gewonnen()
 
         print(f"Schade, Sie haben verloren. Das richtige Wort war {self.wort}.")
