@@ -1,16 +1,17 @@
 import zufallsworte
 import sys
 # ß ist in den Wörtern
+
 HANGMANS_RAW = ''' 18 Zeichen ergeben ein Bild...
-                                         __________        __________        __________        __________        __________        __________        __________        __________        __________     
-                       |                 |                 |/                |/        |       |/        |       |/        |       |/        |       |/        |       |/        |       |/        |    
-                       |                 |                 |                 |                 |         O       |         O       |         O       |         O       |         O       |         O    
-                       |                 |                 |                 |                 |                 |         |       |        -|       |        -|       |        -|-      |        -|-   
-                       |                 |                 |                 |                 |                 |                 |                 |          \      |          \      |        / \   
-                       |                 |                 |                 |                 |                 |                 |                 |                 |                 |  GAME OVER   
-    _________         _|_______         _|_______         _|_______         _|_______         _|_______         _|_______         _|_______         _|_______         _|_______         _|_______     
-___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ 
-'''.split('\n')[1:-1]
+                                         __________        __________        __________        __________        __________        __________        __________        __________        __________
+                       |                 |                 |/                |/        |       |/        |       |/        |       |/        |       |/        |       |/        |       |/        |
+                       |                 |                 |                 |                 |         O       |         O       |         O       |         O       |         O       |         O
+                       |                 |                 |                 |                 |                 |         |       |        -|       |        -|       |        -|-      |        -|-
+                       |                 |                 |                 |                 |                 |                 |                 |          \      |          \      |        / \ 
+                       |                 |                 |                 |                 |                 |                 |                 |                 |                 |  GAME OVER
+    _________         _|_______         _|_______         _|_______         _|_______         _|_______         _|_______         _|_______         _|_______         _|_______         _|_______
+___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___ ___/         \___
+'''.split('\n')[1:-1]  # ohne erste und letzte Zeile
 
 
 class Hangman():
@@ -24,151 +25,15 @@ class Hangman():
         self.versuche = 10
 
     def define_hangman(self):
-        self.versuch10 = '''
-
-
-
-
-
-
-            _________
-        ___/         \___
-        '''
-
-        self.versuch9 = '''
-
-             |
-             |
-             |
-             |
-             |
-            _|_______
-        ___/         \___
-        '''
-
-        self.versuch8 = '''
-             __________
-             |
-             |
-             |
-             |
-             |
-            _|_______
-        ___/         \___
-        '''
-
-        self.versuch7 = '''
-             __________
-             |/
-             |
-             |
-             |
-             |
-            _|_______
-        ___/         \___
-        '''
-
-        self.versuch6 = '''
-             __________
-             |/        |
-             |
-             |
-             |
-             |
-            _|_______
-        ___/         \___
-        '''
-
-        self.versuch5 = '''
-             __________
-             |/        |
-             |         O
-             |
-             |
-             |
-            _|_______
-        ___/         \___
-        '''
-
-        self.versuch4 = '''
-             __________
-             |/        |
-             |         O
-             |         |
-             |
-             |
-            _|_______
-        ___/         \___
-        '''
-
-        self.versuch3 = '''
-             __________
-             |/        |
-             |         O
-             |        -|
-             |
-             |
-            _|_______
-        ___/         \___
-        '''
-
-        self.versuch2 = '''
-             __________
-             |/        |
-             |         O
-             |        -|
-             |          \ 
-             |
-            _|_______
-        ___/         \___
-        '''
-
-        self.versuch1 = '''
-             __________
-             |/        |
-             |         O
-             |        -|-
-             |          \ 
-             |
-            _|_______
-        ___/         \___
-        '''
-
-        self.versuch0 = '''
-             __________
-             |/        |
-             |         O
-             |        -|-
-             |        / \ 
-             |  GAME OVER
-            _|_______
-        ___/         \___
-        '''
+        self.HANGMAN = []
+        for spalte in range(11):
+            hangman_spalte = []
+            for zeile in HANGMANS_RAW:
+                hangman_spalte.append(zeile[(18 * spalte):(18 * (spalte + 1))])
+            self.HANGMAN.append("\n".join(hangman_spalte))
 
     def print_hangman(self, number):
-        match number:
-            case 10:
-                print(self.versuch10)
-            case 9:
-                print(self.versuch9)
-            case 8:
-                print(self.versuch8)
-            case 7:
-                print(self.versuch7)
-            case 6:
-                print(self.versuch6)
-            case 5:
-                print(self.versuch5)
-            case 4:
-                print(self.versuch4)
-            case 3:
-                print(self.versuch3)
-            case 2:
-                print(self.versuch2)
-            case 1:
-                print(self.versuch1)
-            case 0:
-                print(self.versuch0)
+        print(self.HANGMAN[10 - number])
 
     def wortlaenge(self):
         self.print_hangman(self.versuche)
@@ -231,6 +96,7 @@ class Hangman():
             if set(self.wort) <= set(self.gefunden):
                 self.gewonnen()
 
+        self.print_hangman(self.versuche)
         print(f"Schade, Sie haben verloren. Das richtige Wort war {self.wort}.")
         self.neue_runde()
 
