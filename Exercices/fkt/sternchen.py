@@ -20,20 +20,22 @@ def main(groesse):
 
 
 def eingabe():
-    breite = input("Wie breit soll ihr Sternchen-Rechteck sein?")
-    hoehe = input("Wie hoch soll ihr Sternchen-Rechteck sein?")
-    return input_testing(breite, hoehe)
-
+    breite = int(input("Wie breit soll ihr Sternchen-Rechteck sein?"))
+    hoehe = int(input("Wie hoch soll ihr Sternchen-Rechteck sein?"))
+    while not input_testing(breite, hoehe):
+        print("Die Eingaben sollen Zahlen mehr oder gleichgross wie 2 sein. ")
+        return eingabe()
+        breite = int(input("Wie breit soll ihr Sternchen-Rechteck sein?"))
+        hoehe = int(input("Wie hoch soll ihr Sternchen-Rechteck sein?"))
+    return breite, hoehe
 
 def input_testing(breite, hoehe):
     if breite.isnumeric() and hoehe.isnumeric():
         breite = int(breite)
         hoehe = int(hoehe)
         if breite >= 2 and hoehe >= 2:
-            return breite, hoehe
-    else:
-        print("Die Eingaben sollen Zahlen mehr oder gleichgross wie 2 sein. ")
-        return eingabe()
+            return True
+    return False
 
 
 main(eingabe())
