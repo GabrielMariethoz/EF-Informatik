@@ -3,8 +3,8 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-const USERNAME = 'foobar';
-const REPO_NAME = 'repo';
+const USERNAME = 'GabrielMariethoz';
+const REPO_NAME = 'EF-Informatik';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -67,7 +67,7 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          {to: '/', label: 'Blog', position: 'left'},
+          { to: '/', label: 'Blog', position: 'left' },
           {
             type: 'doc',
             docId: 'about-me',
@@ -126,12 +126,12 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
-    }),  
-    markdown: {
-      mermaid: true,
-    },
-    themes: ['@docusaurus/theme-mermaid'],
-    plugins: ['docusaurus-plugin-sass'],
+    }),
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+  plugins: ['docusaurus-plugin-sass'],
 };
 
 module.exports = config;
