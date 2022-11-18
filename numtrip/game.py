@@ -68,6 +68,8 @@ class Numtrip():
             self.zeile(zeile_m)
             self.l_zeile()
             self.minus()
+        self.zeilennummer = 1
+        self.instance = "Input"
 
     def choose_instance(self):
         if self.instance == "Darstellen":
@@ -76,7 +78,8 @@ class Numtrip():
             self.eingabe()
 
     def eingabe(self):
-        pass
+        feld_eingabe = input("Geben Sie ein Feld ein: ")
+        self.instance = "Darstellen"
 
 
 numtrip = Numtrip()
