@@ -11,6 +11,7 @@ class Numtrip():
             [128, 256, 512, 8, 16]
             ]
         self.zeilennummer = 1
+        self.instance = "Darstellen"
 
     def minus(self):
         print("   +------+------+------+------+------+")
@@ -68,6 +69,16 @@ class Numtrip():
             self.l_zeile()
             self.minus()
 
+    def choose_instance(self):
+        if self.instance == "Darstellen":
+            self.darstellen(self.matrix)
+        elif self.instance == "Input":
+            self.eingabe()
+
+    def eingabe(self):
+        pass
+
 
 numtrip = Numtrip()
-numtrip.darstellen(numtrip.matrix)
+while True:
+    numtrip.choose_instance()
