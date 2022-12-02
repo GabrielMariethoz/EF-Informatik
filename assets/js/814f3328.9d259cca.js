@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkef_website_template=self.webpackChunkef_website_template||[]).push([[535],{5641:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"02.09.2022 report","permalink":"/EF-Informatik/02.09.2022"},{"title":"26.08.2022 report","permalink":"/EF-Informatik/26.08.2022"},{"title":"eingabe","permalink":"/EF-Informatik/eingabe"}]}')}}]);
