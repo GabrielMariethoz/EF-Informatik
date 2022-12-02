@@ -81,10 +81,11 @@ class Numtrip():
         eingabe_gueltig = False
         while not eingabe_gueltig:
             feld_eingabe = input("Geben Sie ein Feld ein: ")
-            if feld_eingabe.isalnum():
-                feld_eingabe.replace(" ", "")
-                if feld_eingabe.isnumeric() and len(feld_eingabe) == 2:
-                    eingabe_gueltig = True
+            feld_eingabe = feld_eingabe.replace(" ", "")
+            if feld_eingabe.isnumeric() and len(feld_eingabe) == 2:
+                eingabe_gueltig = True
+            else:
+                print("Die Eingabe muss in diesem Format sein: Zahl Zahl ; Beispiel 2 5\n")
 
         self.instance = "Darstellen"
 
