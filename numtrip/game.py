@@ -1,4 +1,5 @@
-from random import randint
+# from random import randint ; Das ist für eine zufällige Matrix
+import math
 
 
 class Numtrip():
@@ -17,7 +18,9 @@ class Numtrip():
         print("   +------+------+------+------+------+")
 
     def zahl(self, zahl_m):
-        if zahl_m == 2:
+        if zahl_m == 0:
+            pass
+        elif zahl_m == 2:
             color = "\033[31m"
         elif zahl_m == 4:
             color = "\033[32m"
@@ -38,7 +41,9 @@ class Numtrip():
         elif zahl_m == 1024:
             color = "\033[34;1m"
 
-        if zahl_m < 10:
+        if zahl_m == 0:
+            return "|     "
+        elif zahl_m < 10:
             return f"|{color}   {zahl_m} \033[0m"
         elif zahl_m < 100:
             return f"|{color}  {zahl_m} \033[0m"
@@ -51,6 +56,7 @@ class Numtrip():
         zeile_m = []
         for zahl_m in zeile:
             zeile_m.append(self.zahl(zahl_m))
+
         print(f"{self.zeilennummer} ", zeile_m[0], zeile_m[1], zeile_m[2], zeile_m[3], zeile_m[4], "|")
         self.zeilennummer += 1
 
@@ -80,12 +86,14 @@ class Numtrip():
     def eingabe(self):
         eingabe_gueltig = False
         while not eingabe_gueltig:
-            feld_eingabe = input("Geben Sie ein Feld ein: ")
-            feld_eingabe = feld_eingabe.replace(" ", "")
-            if feld_eingabe.isnumeric() and len(feld_eingabe) == 2:
+            self.feld_eingabe = input("Geben Sie ein Feld ein: ")
+            self.feld_eingabe = self.feld_eingabe.replace(" ", "")
+            if self.feld_eingabe.isnumeric() and len(self.feld_eingabe) == 2:
                 eingabe_gueltig = True
             else:
                 print("Die Eingabe muss in diesem Format sein: Zahl Zahl ; Beispiel 2 5\n")
+
+        self.matrix[int(self.feld_eingabe[0]) - 1][int(self.feld_eingabe[1]) - 1] = 0
 
         self.instance = "Darstellen"
 
