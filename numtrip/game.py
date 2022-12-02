@@ -75,13 +75,10 @@ class Numtrip():
             self.l_zeile()
             self.minus()
         self.zeilennummer = 1
-        self.instance = "Input"
 
-    def choose_instance(self):
-        if self.instance == "Darstellen":
-            self.darstellen(self.matrix)
-        elif self.instance == "Input":
-            self.eingabe()
+    def spielen(self):
+        self.darstellen(self.matrix)
+        self.eingabe()
 
     def eingabe(self):
         eingabe_gueltig = False
@@ -95,9 +92,7 @@ class Numtrip():
 
         self.matrix[int(self.feld_eingabe[0]) - 1][int(self.feld_eingabe[1]) - 1] = 0
 
-        self.instance = "Darstellen"
-
 
 numtrip = Numtrip()
 while True:
-    numtrip.choose_instance()
+    numtrip.spielen()
