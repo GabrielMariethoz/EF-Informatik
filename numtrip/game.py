@@ -78,7 +78,14 @@ class Numtrip():
             self.eingabe()
 
     def eingabe(self):
-        feld_eingabe = input("Geben Sie ein Feld ein: ")
+        eingabe_gueltig = False
+        while not eingabe_gueltig:
+            feld_eingabe = input("Geben Sie ein Feld ein: ")
+            if feld_eingabe.isalnum():
+                feld_eingabe.replace(" ", "")
+                if feld_eingabe.isnumeric() and len(feld_eingabe) == 2:
+                    eingabe_gueltig = True
+
         self.instance = "Darstellen"
 
 
