@@ -78,7 +78,7 @@ class Numtrip():
 
     def spielen(self):
         self.darstellen(self.matrix)
-        self.eingabe()
+        self.nachbarsfelder(self.eingabe())
 
     def eingabe(self):
         eingabe_gueltig = False
@@ -90,7 +90,28 @@ class Numtrip():
             else:
                 print("Die Eingabe muss in diesem Format sein: Zahl Zahl ; Beispiel 2 5\n")
 
+        self.alter_wert = self.matrix[int(self.feld_eingabe[0]) - 1][int(self.feld_eingabe[1]) - 1]
         self.matrix[int(self.feld_eingabe[0]) - 1][int(self.feld_eingabe[1]) - 1] = 0
+        return [int(self.feld_eingabe[0]) - 1, int(self.feld_eingabe[1]) - 1]
+
+    def nachbarsfelder(self, feld: list):
+
+        if feld[0] > 0:
+            if self.matrix[feld[0] - 1][feld[1]] == self.alter_wert:
+                self.matrix[feld[0] - 1][feld[1]] = 0
+                self.nachbarsfelder([feld[0] - 1, feld[1]])
+        if feld[0] < 4:
+            if self.matrix[feld[0] + 1][feld[1]] == self.alter_wert:
+                self.matrix[feld[0] + 1][feld[1]] = 0
+                self.nachbarsfelder([feld[0] + 1, feld[1]])
+        if feld[1] > 0:
+            if self.matrix[feld[0]][feld[1] - 1] == self.alter_wert:
+                self.matrix[feld[0]][feld[1] - 1] = 0
+                self.nachbarsfelder([feld[0], feld[1] - 1])
+        if feld[1] < 4:
+            if self.matrix[feld[0]][feld[1] + 1] == self.alter_wert:
+                self.matrix[feld[0]][feld[1] + 1] = 0
+                self.nachbarsfelder([feld[0], feld[1] + 1])
 
 
 numtrip = Numtrip()
