@@ -1,4 +1,4 @@
-# from random import randint ; Das ist für eine zufällige Matrix
+import random
 import math
 
 
@@ -83,7 +83,12 @@ class Numtrip():
         for spalte in range(5):
             for zeile in range(4, 0, -1):
                 if self.matrix[zeile][spalte] == 0:
-                    self.auffuelen(zeile, spalte)
+                    self.auffuellen(zeile, spalte)
+
+        for zeile in range(len(self.matrix)):
+            for spalte in range(len(self.matrix[zeile])):
+                if self.matrix[zeile][spalte] == 0:
+                    self.matrix[zeile][spalte] = random.choice([2, 2, 2, 4, 4, 4, 8])
 
     def eingabe(self):
         eingabe_gueltig = False
@@ -118,7 +123,7 @@ class Numtrip():
                 self.matrix[feld[0]][feld[1] + 1] = 0
                 self.nachbarsfelder([feld[0], feld[1] + 1])
 
-    def auffuelen(self, zeile, spalte):
+    def auffuellen(self, zeile, spalte):
         for zeile_oberhalb in range(zeile, -1, -1):
             if not self.matrix[zeile_oberhalb][spalte] == 0:
                 self.matrix[zeile][spalte] = self.matrix[zeile_oberhalb][spalte]
