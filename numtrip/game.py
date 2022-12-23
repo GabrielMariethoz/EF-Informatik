@@ -78,7 +78,12 @@ class Numtrip():
 
     def spielen(self):
         self.darstellen(self.matrix)
-        self.nachbarsfelder(self.eingabe())
+        zelle = self.eingabe()
+        self.nachbarsfelder(zelle)
+        for spalte in range(5):
+            for zeile in range(4, 0, -1):
+                if self.matrix[zeile][spalte] == 0:
+                    self.auffuelen(zeile, spalte)
 
     def eingabe(self):
         eingabe_gueltig = False
@@ -112,6 +117,13 @@ class Numtrip():
             if self.matrix[feld[0]][feld[1] + 1] == self.alter_wert:
                 self.matrix[feld[0]][feld[1] + 1] = 0
                 self.nachbarsfelder([feld[0], feld[1] + 1])
+
+    def auffuelen(self, zeile, spalte):
+        for zeile_oberhalb in range(zeile, -1, -1):
+            if not self.matrix[zeile_oberhalb][spalte] == 0:
+                self.matrix[zeile][spalte] = self.matrix[zeile_oberhalb][spalte]
+                self.matrix[zeile_oberhalb][spalte] = 0
+                return
 
 
 numtrip = Numtrip()
