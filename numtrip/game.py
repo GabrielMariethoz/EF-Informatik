@@ -91,7 +91,7 @@ class Numtrip():
                 print("Die Eingabe muss in diesem Format sein: Zahl Zahl ; Beispiel 2 5\n")
 
         self.alter_wert = self.matrix[int(self.feld_eingabe[0]) - 1][int(self.feld_eingabe[1]) - 1]
-        self.matrix[int(self.feld_eingabe[0]) - 1][int(self.feld_eingabe[1]) - 1] = 0
+        self.matrix[int(self.feld_eingabe[0]) - 1][int(self.feld_eingabe[1]) - 1] *= 2
         return [int(self.feld_eingabe[0]) - 1, int(self.feld_eingabe[1]) - 1]
 
     def nachbarsfelder(self, feld: list):
