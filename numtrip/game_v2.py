@@ -52,7 +52,7 @@ def zahl(zahl_m: int) -> str:
         color = "\033[33;1m"
     elif zahl_m == 1024:
         color = "\033[34;1m"
-    else:
+    else:  # Für Zahlen grösser als 1024, z.B. 2048
         color = "\033[37m"
 
     if zahl_m == 0:
