@@ -14,8 +14,10 @@ class Numtrip():
         self.zeilennummer = 1
         self.instance = "Darstellen"
 
-    def minus(self):
-        print("   +------+------+------+------+------+")
+
+def trennzeile():
+    '''Gibt eine Trennzeile aus'''
+    print("   +------+------+------+------+------+")
 
     def zahl(self, zahl_m):
         if zahl_m == 0:
