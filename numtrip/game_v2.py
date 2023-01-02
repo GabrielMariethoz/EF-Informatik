@@ -162,19 +162,19 @@ def nachbarsfelder(eingabe: tuple):
     if feld[0] > 0:
         if matrix[feld[0] - 1][feld[1]] == alter_wert:
             matrix[feld[0] - 1][feld[1]] = 0
-            nachbarsfelder([feld[0] - 1, feld[1]], alter_wert)
+            nachbarsfelder(([feld[0] - 1, feld[1]], alter_wert))
     if feld[0] < 4:
         if matrix[feld[0] + 1][feld[1]] == alter_wert:
             matrix[feld[0] + 1][feld[1]] = 0
-            nachbarsfelder([feld[0] + 1, feld[1]], alter_wert)
+            nachbarsfelder(([feld[0] + 1, feld[1]], alter_wert))
     if feld[1] > 0:
         if matrix[feld[0]][feld[1] - 1] == alter_wert:
             matrix[feld[0]][feld[1] - 1] = 0
-            nachbarsfelder([feld[0], feld[1] - 1], alter_wert)
+            nachbarsfelder(([feld[0], feld[1] - 1], alter_wert))
     if feld[1] < 4:
         if matrix[feld[0]][feld[1] + 1] == alter_wert:
             matrix[feld[0]][feld[1] + 1] = 0
-            nachbarsfelder([feld[0], feld[1] + 1], alter_wert)
+            nachbarsfelder(([feld[0], feld[1] + 1], alter_wert))
 
 
 def auffuellen(zeile: int, spalte: int) -> None:
