@@ -52,8 +52,8 @@ def zahl(zahl_m: int) -> str:
         color = "\033[33;1m"
     elif zahl_m == 1024:
         color = "\033[34;1m"
-    # else:
-    #     assert True, "Error: In Funktion zahl() zahl_m hat keinen gültigen Wert, keine Farbe kann zugeteilt werden."
+    else:
+        color = "\033[37m"
 
     if zahl_m == 0:
         return "|     "
