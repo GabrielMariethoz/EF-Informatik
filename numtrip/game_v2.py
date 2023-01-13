@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import os  # Für Bombe
 
 # matrix = [
 #         [4, 4, 32, 16, 64],
@@ -9,6 +10,7 @@ import numpy as np
 #         [128, 256, 512, 8, 16]
 #         ]
 
+# Elemente der Matrix zufällig definieren.
 matrix = [[random.choice([2, 4, 8, 16]) for i in range(5)] for j in range(5)]
 
 
@@ -140,6 +142,8 @@ def eingabe() -> tuple:
 
     alter_wert = matrix[int(feld_eingabe[0]) - 1][int(feld_eingabe[1]) - 1]
     matrix[int(feld_eingabe[0]) - 1][int(feld_eingabe[1]) - 1] *= 2  # Der Wert des ausgewählten Feldes wird verdoppelt
+    if alter_wert == 512:
+        os.startfile("C:/Users/Gabriel/Documents/GYM3/EF-Informatik/numtrip/bombe.mp4")
 
     return [int(feld_eingabe[0]) - 1, int(feld_eingabe[1]) - 1], alter_wert
 
