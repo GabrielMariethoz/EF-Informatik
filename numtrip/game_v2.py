@@ -141,7 +141,7 @@ def eingabe() -> tuple:
             print("Die Eingabe muss in diesem Format sein: Zahl Zahl ; Beispiel 2 5\n")
 
     alter_wert = matrix[int(feld_eingabe[0]) - 1][int(feld_eingabe[1]) - 1]
-    matrix[int(feld_eingabe[0]) - 1][int(feld_eingabe[1]) - 1] *= 2  # Der Wert des ausgewählten Feldes wird verdoppelt
+    matrix[int(feld_eingabe[0]) - 1][int(feld_eingabe[1]) - 1] = 0
 
     if alter_wert == 512:
         playsound.playsound("C:/Users/Gabriel/Documents/GYM3/EF-Informatik/numtrip/bombe.mp3")
@@ -165,23 +165,30 @@ def nachbarsfelder(eingabe: tuple):
 
     feld = eingabe[0]
     alter_wert = eingabe[1]
+    gleiches_feld = False
 
     if feld[0] > 0:
         if matrix[feld[0] - 1][feld[1]] == alter_wert:
             matrix[feld[0] - 1][feld[1]] = 0
+            gleiches_feld = True
             nachbarsfelder(([feld[0] - 1, feld[1]], alter_wert))
     if feld[0] < 4:
         if matrix[feld[0] + 1][feld[1]] == alter_wert:
             matrix[feld[0] + 1][feld[1]] = 0
+            gleiches_feld = True
             nachbarsfelder(([feld[0] + 1, feld[1]], alter_wert))
     if feld[1] > 0:
         if matrix[feld[0]][feld[1] - 1] == alter_wert:
             matrix[feld[0]][feld[1] - 1] = 0
+            gleiches_feld = True
             nachbarsfelder(([feld[0], feld[1] - 1], alter_wert))
     if feld[1] < 4:
         if matrix[feld[0]][feld[1] + 1] == alter_wert:
             matrix[feld[0]][feld[1] + 1] = 0
+            gleiches_feld = True
             nachbarsfelder(([feld[0], feld[1] + 1], alter_wert))
+
+    return gleiches_feld
 
 
 def auffuellen(zeile: int, spalte: int) -> None:
@@ -211,7 +218,8 @@ def spielen():
     darstellen()
 
     zelle = eingabe()
-    nachbarsfelder(zelle)
+    # Der Wert des ausgewählten Feldes wird verdoppelt falls ein Nachbarsfeld den gleichen Wert hat.
+    matrix[zelle[0][0]][zelle[0][1]] = zelle[1] * 2 if nachbarsfelder(zelle) else 0
 
     for spalte in range(5):
         for zeile in range(4, 0, -1):
