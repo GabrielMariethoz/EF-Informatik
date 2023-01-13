@@ -149,7 +149,7 @@ def eingabe() -> tuple:
     return [int(feld_eingabe[0]) - 1, int(feld_eingabe[1]) - 1], alter_wert
 
 
-def nachbarsfelder(eingabe: tuple):
+def nachbarsfelder(eingabe: tuple) -> bool:
     '''Testet, ob die nebenliegendenden Felder den gleichen Wert haben
 
     Die Funktion testet, ob die Felder nebendran den gleichen Wert haben, wenn ja dann setzt es den Wert des nebenliegenden Feldes auf 0 und ruft die Funktion nachbarsfelder() mit dem nebenliegenden Feld als Parameter auf.
@@ -157,6 +157,11 @@ def nachbarsfelder(eingabe: tuple):
     Parameters
     ----------
     eingabe: Beinhaltet im ersten Wert, das zu untersuchende Feld als Liste und als zweiten Wert den ursprünglichen Wert des Feldes.
+
+    Return
+    ------
+    bool
+        Gibt True zurück, falls ein Nachbarsfeld gewunden wurde, welches den gleichen Wert hat, wie das eingegebene Feld.
 
     Warnings
     --------
