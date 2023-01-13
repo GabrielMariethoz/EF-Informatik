@@ -1,6 +1,6 @@
 import random
 import numpy as np
-import os  # Für Bombe
+import playsound  # Für Bombe
 
 # matrix = [
 #         [4, 4, 32, 16, 64],
@@ -142,8 +142,9 @@ def eingabe() -> tuple:
 
     alter_wert = matrix[int(feld_eingabe[0]) - 1][int(feld_eingabe[1]) - 1]
     matrix[int(feld_eingabe[0]) - 1][int(feld_eingabe[1]) - 1] *= 2  # Der Wert des ausgewählten Feldes wird verdoppelt
+
     if alter_wert == 512:
-        os.startfile("C:/Users/Gabriel/Documents/GYM3/EF-Informatik/numtrip/bombe.mp4")
+        playsound.playsound("C:/Users/Gabriel/Documents/GYM3/EF-Informatik/numtrip/bombe.mp3")
 
     return [int(feld_eingabe[0]) - 1, int(feld_eingabe[1]) - 1], alter_wert
 
