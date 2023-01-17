@@ -86,9 +86,7 @@ def zeile(zeile: list, zeilennummer: int) -> int:
         Das ist die nächste Zeilennummer, damit die nächste Zeile bei der nächsten Iteration ausgegeben werden kann. 
     '''
 
-    zeile_m = []
-    for zahl_m in zeile:
-        zeile_m.append(zahl(zahl_m))
+    zeile_m = [zahl(zahl_m) for zahl_m in zeile]
 
     try:
         print(f"{zeilennummer} ", zeile_m[0], zeile_m[1], zeile_m[2], zeile_m[3], zeile_m[4], "|")
@@ -113,7 +111,7 @@ def darstellen():
     zeilennummer = 1
     spaltennummer()
     trennzeile()
-    for zeile_m in matrix:
+    for zeilennummer, zeile_m in enumerate(matrix, start=1):
         l_zeile()
         zeilennummer = zeile(zeile_m, zeilennummer)
         l_zeile()
@@ -226,10 +224,10 @@ def spielen():
     darstellen()
 
     moegliche_zahlen = []
-    for zeile in range(len(matrix)):
-        for zahl in range(len(matrix[zeile])):
-            if nachbarsfelder([zeile, zahl], False):
-                moegliche_zahlen.append([zeile, zahl])
+    for i_zeile, zeile in enumerate(matrix):
+        for i_zahl, zahl in enumerate(zeile):
+            if nachbarsfelder([i_zeile, i_zahl], False):
+                moegliche_zahlen.append([i_zeile, i_zahl])
 
     # Wenn es möglich ist ein Feld zu verdoppeln, d.h moegliche_zahlen nicht leer ist, dann soll das Spiel weitergehen.
     if moegliche_zahlen:
@@ -255,10 +253,15 @@ def spielen():
                     auffuellen(zeile, spalte)
 
         # Felder, welche keinen Wert haben, werden mit einer zufälligen Zahl mit random.choice ↓ gefüllt.
-        for zeile in range(len(matrix)):
-            for spalte in range(len(matrix[zeile])):
-                if matrix[zeile][spalte] == 0:
-                    matrix[zeile][spalte] = random.choice([2, 2, 2, 4, 4, 4, 8])
+        for i_zeile, zeile in enumerate(matrix):
+            for i_spalte, spalte in enumerate(matrix[i_zeile]):
+                if zeile[i_spalte] == 0:
+                    zeile[i_spalte] = random.choice([2, 2, 2, 4, 4, 4, 8])
+
+        # for zeile in range(len(matrix)):
+        #     for spalte in range(len(matrix[zeile])):
+        #         if matrix[zeile][spalte] == 0:
+        #             matrix[zeile][spalte] = random.choice([2, 2, 2, 4, 4, 4, 8])
 
     else:
         print("Sie haben das Spiel leider veloren, es gibt keine Möglichkeiten mehr :(, he gotcha schlecht!!!")
