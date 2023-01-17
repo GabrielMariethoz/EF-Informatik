@@ -258,11 +258,6 @@ def spielen():
                 if zeile[i_spalte] == 0:
                     zeile[i_spalte] = random.choice([2, 2, 2, 4, 4, 4, 8])
 
-        # for zeile in range(len(matrix)):
-        #     for spalte in range(len(matrix[zeile])):
-        #         if matrix[zeile][spalte] == 0:
-        #             matrix[zeile][spalte] = random.choice([2, 2, 2, 4, 4, 4, 8])
-
     else:
         print("Sie haben das Spiel leider veloren, es gibt keine Möglichkeiten mehr :(, he gotcha schlecht!!!")
         sys.exit()
