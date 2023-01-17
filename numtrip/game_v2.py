@@ -1,6 +1,7 @@
 import random
 import numpy as np
-import playsound  # Für Bombe
+import playsound  # Für Bombe, man braucht playsound Version 1.2.2 sonst kommt ein Fehler
+import sys
 
 # matrix = [
 #         [4, 4, 32, 16, 64],
@@ -119,16 +120,15 @@ def darstellen():
         trennzeile()
 
 
-def eingabe() -> tuple:
-    '''Liest die Eingabe ein
+def eingabe() -> list:
+    '''Liest die Eingabe ein und gibt sie zurück. 
 
     Die Eingabe ist das Feld, welches gelöscht werden muss. 
 
     Returns
     -------
-    tuple
-        Der erste Wert des Tupels sind die Indexe des ausgewählten Feldes in der Liste matrix.
-        Der zweite Wert ist der ursprüngliche Wert des ausgewählten Feldes bevor es gelöscht wurde.
+    list
+        Die Indexe des bei der Eingabe ausgewählten Feldes in der Liste matrix.
     '''
 
     eingabe_gueltig = False
@@ -140,23 +140,18 @@ def eingabe() -> tuple:
         else:
             print("Die Eingabe muss in diesem Format sein: Zahl Zahl ; Beispiel 2 5\n")
 
-    alter_wert = matrix[int(feld_eingabe[0]) - 1][int(feld_eingabe[1]) - 1]
-    matrix[int(feld_eingabe[0]) - 1][int(feld_eingabe[1]) - 1] = 0
-
-    if alter_wert == 512:
-        playsound.playsound("C:/Users/Gabriel/Documents/GYM3/EF-Informatik/numtrip/bombe.mp3")
-
-    return [int(feld_eingabe[0]) - 1, int(feld_eingabe[1]) - 1], alter_wert
+    return [int(feld_eingabe[0]) - 1, int(feld_eingabe[1]) - 1]
 
 
-def nachbarsfelder(eingabe: tuple) -> bool:
+def nachbarsfelder(feld: list, rekursion: bool = True) -> bool:
     '''Testet, ob die nebenliegendenden Felder den gleichen Wert haben
 
     Die Funktion testet, ob die Felder nebendran den gleichen Wert haben, wenn ja dann setzt es den Wert des nebenliegenden Feldes auf 0 und ruft die Funktion nachbarsfelder() mit dem nebenliegenden Feld als Parameter auf.
 
     Parameters
     ----------
-    eingabe: Beinhaltet im ersten Wert, das zu untersuchende Feld als Liste und als zweiten Wert den ursprünglichen Wert des Feldes.
+    feld: Sind die Indexe des Feldes, welches getestet werden muss
+    rekursion: Wenn True, dann wird die Funktion rekursiv wieder aufgerufen, wenn False nicht. Ist True wenn nichts anderes vorgegeben. 
 
     Return
     ------
@@ -168,30 +163,37 @@ def nachbarsfelder(eingabe: tuple) -> bool:
     Die Funktion wird rekursiv aufgerufen, daher kann STACK OVERFLOW geschehen, wenn sie zuviel Male aufgerufen wird
     '''
 
-    feld = eingabe[0]
-    alter_wert = eingabe[1]
+    alter_wert = matrix[feld[0]][feld[1]]  # Wert des Feldes einspeichern
+
+    if rekursion:
+        matrix[feld[0]][feld[1]] = 0  # Falls rekursiert werden sollte, wird der Wert des Feldes zurückgesetzt.
+
     gleiches_feld = False
 
     if feld[0] > 0:
         if matrix[feld[0] - 1][feld[1]] == alter_wert:
-            matrix[feld[0] - 1][feld[1]] = 0
             gleiches_feld = True
-            nachbarsfelder(([feld[0] - 1, feld[1]], alter_wert))
+
+            if rekursion:
+                nachbarsfelder([feld[0] - 1, feld[1]])
     if feld[0] < 4:
         if matrix[feld[0] + 1][feld[1]] == alter_wert:
-            matrix[feld[0] + 1][feld[1]] = 0
             gleiches_feld = True
-            nachbarsfelder(([feld[0] + 1, feld[1]], alter_wert))
+
+            if rekursion:
+                nachbarsfelder([feld[0] + 1, feld[1]])
     if feld[1] > 0:
         if matrix[feld[0]][feld[1] - 1] == alter_wert:
-            matrix[feld[0]][feld[1] - 1] = 0
             gleiches_feld = True
-            nachbarsfelder(([feld[0], feld[1] - 1], alter_wert))
+
+            if rekursion:
+                nachbarsfelder([feld[0], feld[1] - 1])
     if feld[1] < 4:
         if matrix[feld[0]][feld[1] + 1] == alter_wert:
-            matrix[feld[0]][feld[1] + 1] = 0
             gleiches_feld = True
-            nachbarsfelder(([feld[0], feld[1] + 1], alter_wert))
+
+            if rekursion:
+                nachbarsfelder([feld[0], feld[1] + 1])
 
     return gleiches_feld
 
@@ -220,22 +222,47 @@ def auffuellen(zeile: int, spalte: int) -> None:
 
 def spielen():
     '''Ist die immer ausgeführte Hauptfunktion, welches zuständig ist für das Spielen. '''
+
     darstellen()
 
-    zelle = eingabe()
-    # Der Wert des ausgewählten Feldes wird verdoppelt falls ein Nachbarsfeld den gleichen Wert hat.
-    matrix[zelle[0][0]][zelle[0][1]] = zelle[1] * 2 if nachbarsfelder(zelle) else 0
-
-    for spalte in range(5):
-        for zeile in range(4, 0, -1):
-            if matrix[zeile][spalte] == 0:
-                auffuellen(zeile, spalte)
-
-    # Felder, welche keinen Wert haben, werden mit einer zufälligen Zahl mit random.choice ↓ gefüllt.
+    moegliche_zahlen = []
     for zeile in range(len(matrix)):
-        for spalte in range(len(matrix[zeile])):
-            if matrix[zeile][spalte] == 0:
-                matrix[zeile][spalte] = random.choice([2, 2, 2, 4, 4, 4, 8])
+        for zahl in range(len(matrix[zeile])):
+            if nachbarsfelder([zeile, zahl], False):
+                moegliche_zahlen.append([zeile, zahl])
+
+    # Wenn es möglich ist ein Feld zu verdoppeln, d.h moegliche_zahlen nicht leer ist, dann soll das Spiel weitergehen.
+    if moegliche_zahlen:
+
+        feld = eingabe()
+        while feld not in moegliche_zahlen:
+            print("Dieses Feld kann nicht verdoppelt werden, da die Nachbarsfelder nicht den gleichen Wert haben. ")
+            feld = eingabe()
+
+        # Der Wert des ausgewählten Feldes wird verdoppelt falls ein Nachbarsfeld den gleichen Wert hat.
+        alter_wert = matrix[feld[0]][feld[1]]
+        nachbarsfelder(feld)
+        matrix[feld[0]][feld[1]] = alter_wert * 2
+
+        if matrix[feld[0]][feld[1]] == 2048:
+            print("Bravo! Du hast 2048 erreicht und damit gewonnen :)")
+            playsound.playsound("C:/Users/Gabriel/Documents/GYM3/EF-Informatik/numtrip/bombe.mp3")
+            sys.exit()
+
+        for spalte in range(5):
+            for zeile in range(4, 0, -1):
+                if matrix[zeile][spalte] == 0:
+                    auffuellen(zeile, spalte)
+
+        # Felder, welche keinen Wert haben, werden mit einer zufälligen Zahl mit random.choice ↓ gefüllt.
+        for zeile in range(len(matrix)):
+            for spalte in range(len(matrix[zeile])):
+                if matrix[zeile][spalte] == 0:
+                    matrix[zeile][spalte] = random.choice([2, 2, 2, 4, 4, 4, 8])
+
+    else:
+        print("Sie haben das Spiel leider veloren, es gibt keine Möglichkeiten mehr :(, he gotcha schlecht!!!")
+        sys.exit()
 
 
 while True:
