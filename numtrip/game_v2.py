@@ -219,7 +219,7 @@ def auffuellen(zeile: int, spalte: int) -> None:
 
 
 def spielen():
-    '''Ist die immer ausgeführte Hauptfunktion, welches zuständig ist für das Spielen. '''
+    '''Ist die immer ausgeführte Hauptfunktion, welche zuständig ist für das Spielen. '''
 
     darstellen()
 
