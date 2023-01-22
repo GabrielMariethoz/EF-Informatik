@@ -1,7 +1,8 @@
 import random
 import numpy as np
-import playsound  # Für Bombe, man braucht playsound Version 1.2.2 sonst kommt ein Fehler
+# import playsound  # Für Bombe, man braucht playsound Version 1.2.2 sonst kommt ein Fehler
 import sys
+import json  # Um Daten zu speichern
 
 # matrix = [
 #         [4, 4, 32, 16, 64],
@@ -11,8 +12,24 @@ import sys
 #         [128, 256, 512, 8, 16]
 #         ]
 
-# Elemente der Matrix zufällig definieren.
-matrix = [[random.choice([2, 4, 8, 16]) for i in range(5)] for j in range(5)]
+dateiname = "daten.json"
+
+# Elemente der Matrix zufällig definieren wenn keine Matrix in der .json Datei ist.
+
+matrix = []
+with open(dateiname) as f:
+    datensammlung = json.load(f)
+    if datensammlung["matrix"] == [[0 for j in range(5)] for i in range(5)]:
+        matrix = [[random.choice([2, 4, 8, 16]) for i in range(5)] for j in range(5)]
+    else:
+        matrix = datensammlung["matrix"]
+
+
+datensammlung = {}
+datensammlung["matrix"] = matrix
+
+with open(dateiname, 'w') as f:
+    json.dump(datensammlung, f)
 
 
 def trennzeile():
@@ -244,7 +261,11 @@ def spielen():
 
         if matrix[feld[0]][feld[1]] == 2048:
             print("Bravo! Du hast 2048 erreicht und damit gewonnen :)")
-            playsound.playsound("C:/Users/Gabriel/Documents/GYM3/EF-Informatik/numtrip/bombe.mp3")
+            # playsound.playsound("bombe.mp3")
+
+            datensammlung["matrix"] = matrix
+            with open(dateiname, 'w') as f:
+                json.dump(datensammlung, f)
             sys.exit()
 
         for spalte in range(5):
@@ -258,8 +279,15 @@ def spielen():
                 if zeile[i_spalte] == 0:
                     zeile[i_spalte] = random.choice([2, 2, 2, 4, 4, 4, 8])
 
+        with open(dateiname, 'w') as f:
+            datensammlung["matrix"] = matrix
+            json.dump(datensammlung, f)
+
     else:
         print("Sie haben das Spiel leider veloren, es gibt keine Möglichkeiten mehr :(, he gotcha schlecht!!!")
+        datensammlung["matrix"] = [[0 for j in range(5)] for i in range(5)]
+        with open(dateiname, 'w') as f:
+            json.dump(datensammlung, f)
         sys.exit()
 
 
