@@ -1,11 +1,15 @@
 import json
 
 
-def laden(dateiname):
-    with open(dateiname) as f:
-        datensammlung = json.load(f)
-        return datensammlung['teilnehmer:innen']
+def speichern(teilnehmer, dateiname):
+
+    datensammlung = {}
+    datensammlung['teilnehmer:innen'] = teilnehmer
+
+    with open(dateiname, 'w') as f:
+        json.dump(datensammlung, f)
 
 
-teilnehmer = laden('daten.json')
-print(teilnehmer)
+teilnehmer = ['Anna', 'Bob', 'Theo', 'Karim', 'Robert']
+
+speichern(teilnehmer, 'daten.json')
