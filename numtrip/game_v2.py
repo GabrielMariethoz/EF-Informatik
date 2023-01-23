@@ -1,6 +1,5 @@
 import random
-import numpy as np
-# import playsound  # Für Bombe, man braucht playsound Version 1.2.2 sonst kommt ein Fehler
+# import playsound
 import sys
 import json  # Um Daten zu speichern
 
