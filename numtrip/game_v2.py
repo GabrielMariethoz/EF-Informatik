@@ -124,7 +124,6 @@ def spaltennummer():
 
 def darstellen():
     '''Gibt eine graphische Ausgabe des Spielfeldes'''
-    zeilennummer = 1
     spaltennummer()
     trennzeile()
     for zeilennummer, zeile_m in enumerate(matrix, start=1):
@@ -262,7 +261,7 @@ def spielen():
             print("Bravo! Du hast 2048 erreicht und damit gewonnen :)")
             # playsound.playsound("bombe.mp3")
 
-            datensammlung["matrix"] = matrix
+            datensammlung["matrix"] = [[0 for j in range(5)] for i in range(5)]
             with open(dateiname, 'w') as f:
                 json.dump(datensammlung, f)
             sys.exit()
