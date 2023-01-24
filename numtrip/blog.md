@@ -73,7 +73,7 @@ Rekursiv: Eine Funktion A in der Funktion A aufrufen.
 Eine Herausforderung für mich war es, herauszufinden was ich in meinem Code noch kürzen kann, wie zum Beispiel Listen mit Hilfe von Generatoren zu erstellen, und dass der Code noch leserlich bleibt. 
 
 ## Tipps
-Ich finde, dass man keinen Top-Down Entwurf sondern eher ein Flow Diagramm machen sollte. Ich finde, dass das bei der Programmerstellung mehr hilft. Sonst sollte man nicht im letzen Moment alles machen, sondern schon früh anfangen, denn Programmieren braucht viel Zeit und wenn man einem Punkt ist, wo man nicht mehr weiter weiss, hilft oft eine kleine Pause, ein kleiner Spaziergang oder so, und man hat eine Idee. 
+Ich finde, dass man keinen Top-Down Entwurf sondern eher ein Flow Diagramm machen sollte. Ich finde, dass das bei der Programmerstellung mehr hilft. Sonst sollte man nicht im letzen Moment alles machen, sondern schon früh anfangen, denn Programmieren braucht viel Zeit und wenn man an einem Punkt ist, wo man nicht mehr weiter weiss, hilft oft eine kleine Pause, ein kleiner Spaziergang oder so, und man hat eine Idee. 
 
 ## Link
 Auf der github-Seite. 
