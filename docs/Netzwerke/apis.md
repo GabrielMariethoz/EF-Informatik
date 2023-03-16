@@ -35,3 +35,19 @@ ein endpunkt ist die spezifische adresse, die einen bestimmten service oder eine
 
 ## Polling
 polling bezieht sich auf den prozess, bei dem eine anwendung regelmäßig eine api abfragt, um nach aktualisierten informationen zu suchen. dieser prozess kann auch als "abfragen" bezeichnet werden."
+
+# Erstellung einer API
+Um eine API zu erstellen braucht man einen Server, z.B. Node-Red. In diesem Beispiel kreeire ich eine API, die gewissen Text in Emojis umwandelt. Am Anfang muss man alle HTTP requests mit der Methode GET einfangen, die zu einem vorher definierten Pfad eingehen. Dann erstellt man eine Funktion, welche den Input verändert. In meinem Beispiel wird "hello" und alle ähnlichen Wörter zu 👋 verändert.
+```js
+let emoji = msg.payload.text;
+
+emoji = emoji.replace(/hello/gi, '👋');
+
+msg.payload = {
+    msg: emoji
+};
+
+return msg;
+```
+
+Den Output dieser Funktion kann man dann in Form einer HTTP response zum Client zurückschicken und schon ist die API fertig. Um einfach eine HTTP resquest zu schicken und eine HTTP response zu bekommen kann man Postman brauchen, welcher einfach zu benutzen ist. 
