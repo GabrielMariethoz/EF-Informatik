@@ -51,3 +51,33 @@ return msg;
 ```
 
 Den Output dieser Funktion kann man dann in Form einer HTTP response zum Client zurückschicken und schon ist die API fertig. Um einfach eine HTTP resquest zu schicken und eine HTTP response zu bekommen kann man Postman brauchen, welcher einfach zu benutzen ist. 
+
+# Authentifikation
+Auf dem Server haben für jede Benutzernamen, die jeweiligen Passwörter gespeichert. Der Client schickt das Passwort in Form eines Cookies. Wenn das Passwort und der Benutzernamen übereinstimmern wird der Client weitergeleitet. Die Daten auf dem Server sind jedoch nicht in Hash-Werten abgespeichert, sodass bei einem Datenleak alle Passwörter identifiziert werden könnten. 
+Die Daten auf dem Server sehen so aus:
+```js
+flow.set("maria", {password: "jesus"})
+flow.set("johnny", {password: "asdf"})
+return msg;
+```
+
+So wird überprüft, ob die Passwörter übereinstimmen.
+```js
+if (msg.req.cookies['secret'])
+{
+    const {name, secret} = msg.req.cookies;
+    const user = flow.get(name.toLowerCase());
+    if (user.secret == secret)
+    {
+        return [msg, undefined]
+    }
+    else
+    {
+        return [undefined, msg]
+    }
+}
+else
+{
+    return [undefined, msg]
+}
+```
