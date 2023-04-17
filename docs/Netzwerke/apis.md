@@ -1,0 +1,83 @@
+## Api
+ (application programming interface) is ein schnittstelle die verschiedenen anwendungen erlaubt miteinander zu kommunizieren und daten auszutauschen. grundlegend stellt die api ein satz von regeln und protokollen zur verfügung, damit eine anwendung daten von einer anderen anwendung anfordern und empfangen kann. ein beispiel dafür wäre eine website, die daten eines anderen servers oder einer datenbank abrufen möchte. durch verwendung einer api kann die website eine anfrage an den server oder die datenbank senden und die benötigten daten abrufen, ohne die gesamte datenbankstruktur oder das backend-system zu kennen. stattdessen kann die api als zwischenschicht fungieren und anforderungen von einer anwendung an eine andere weiterleiten, wodurch ein nahtloser datenfluss und effektive kommunikation ermöglicht werden.
+
+## Json format
+json (javascript object notation) ist ein datenformat, das leicht lesbar und schreibbar ist und häufig für den austausch von daten zwischen verschiedenen anwendungen verwendet wird.
+
+## Xml format
+xml (extensible markup language) ist ein textformat, das daten in strukturierter form speichert und häufig für den austausch von daten zwischen verschiedenen systemen verwendet wird.
+
+## Http request:
+http request ist ein begriff, der sich auf die anfrage bezieht, die ein client an einen server sendet, um daten abzurufen oder zu senden.
+
+## Url:
+die url (uniform resource locator) ist die adresse, die den standort der ressource angibt, auf die der client zugreifen möchte.
+
+## Methoden:
+die methoden beschreiben die art der anfrage, die der client an den server sendet, z.b. get, post, put oder delete.
+
+- GET - fordert den Server auf, eine Ressource abzurufen.
+- POST - fordert den Server auf, eine neue Ressource zu erstellen.
+- PUT - fordert den Server auf, eine vorhandene Ressource zu bearbeiten/aktualisieren.
+- DELETE - fordert den Server auf, eine Ressource zu löschen.
+
+## Headers:
+die headers enthalten informationen über die anfrage, wie z.b. den verwendeten browser, den akzeptierten datenformattyp usw.
+
+## Body:
+der body enthält die tatsächlichen daten, die der client an den server senden möchte, z.b. benutzername und passwort.
+
+## Http status codes
+http-statuscodes geben an, ob eine anfrage erfolgreich bearbeitet wurde oder nicht. beispiele für http-statuscodes sind 200 ok, 404 not found und 500 internal server error.
+
+## Endpunkte
+ein endpunkt ist die spezifische adresse, die einen bestimmten service oder eine bestimmte funktion innerhalb einer api definiert.
+
+## Polling
+polling bezieht sich auf den prozess, bei dem eine anwendung regelmäßig eine api abfragt, um nach aktualisierten informationen zu suchen. dieser prozess kann auch als "abfragen" bezeichnet werden."
+
+# Erstellung einer API
+Um eine API zu erstellen braucht man einen Server, z.B. Node-Red. In diesem Beispiel kreeire ich eine API, die gewissen Text in Emojis umwandelt. Am Anfang muss man alle HTTP requests mit der Methode GET einfangen, die zu einem vorher definierten Pfad eingehen. Dann erstellt man eine Funktion, welche den Input verändert. In meinem Beispiel wird "hello" und alle ähnlichen Wörter zu 👋 verändert.
+```js
+let emoji = msg.payload.text;
+
+emoji = emoji.replace(/hello/gi, '👋');
+
+msg.payload = {
+    msg: emoji
+};
+
+return msg;
+```
+
+Den Output dieser Funktion kann man dann in Form einer HTTP response zum Client zurückschicken und schon ist die API fertig. Um einfach eine HTTP resquest zu schicken und eine HTTP response zu bekommen kann man Postman brauchen, welcher einfach zu benutzen ist. 
+
+# Authentifikation
+Auf dem Server haben für jede Benutzernamen, die jeweiligen Passwörter gespeichert. Der Client schickt das Passwort in Form eines Cookies. Wenn das Passwort und der Benutzernamen übereinstimmern wird der Client weitergeleitet. Die Daten auf dem Server sind jedoch nicht in Hash-Werten abgespeichert, sodass bei einem Datenleak alle Passwörter identifiziert werden könnten. 
+Die Daten auf dem Server sehen so aus:
+```js
+flow.set("maria", {password: "jesus"})
+flow.set("johnny", {password: "asdf"})
+return msg;
+```
+
+So wird überprüft, ob die Passwörter übereinstimmen.
+```js
+if (msg.req.cookies['secret'])
+{
+    const {name, secret} = msg.req.cookies;
+    const user = flow.get(name.toLowerCase());
+    if (user.secret == secret)
+    {
+        return [msg, undefined]
+    }
+    else
+    {
+        return [undefined, msg]
+    }
+}
+else
+{
+    return [undefined, msg]
+}
+```
